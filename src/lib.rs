@@ -1,6 +1,5 @@
 use chrono::{DateTime, Duration, Utc};
 use serde::Serialize;
-use std::collections::{HashMap, HashSet};
 
 /// An item in the to-do list.
 #[derive(Clone, Debug, Serialize)]
