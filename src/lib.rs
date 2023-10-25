@@ -40,9 +40,6 @@ fn urgency_ord_does_the_right_thing() {
 pub struct TodoList {
     /// The items in the to-do list.
     pub items: Vec<Item>,
-
-    /// A map for looking up which items might have a certain tag.
-    pub tag_index: HashMap<String, HashSet<usize>>,
 }
 
 impl TodoList {
