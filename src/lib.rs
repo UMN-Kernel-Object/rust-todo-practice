@@ -8,9 +8,6 @@ pub struct Item {
     /// The label of the item.
     pub text: String,
 
-    /// Any tags that have been added to the item.
-    pub tags: HashSet<String>,
-
     /// Whether the item has been checked off or not.
     pub checked: bool,
 
