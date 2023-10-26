@@ -74,8 +74,38 @@ impl TodoList {
         due_in_less_than: Option<Duration>,
         urgency_at_least: Option<Urgency>,
         urgency_at_most: Option<Urgency>,
-    ) -> Vec<(usize, Item)> {
-        todo!("Insert code here to search for items based on given criteria.")
+    ) -> Vec<(usize, &Item)> {
+        let x: Vec<(usize, &Item)> = self.items.iter().enumerate().filter(|(_, item)| {
+            let flag1 = if let Some(u) = urgency_at_least.clone() { 
+                item.urgency >= u 
+            } else { false };
+
+            let flag2 = if let Some(u) = urgency_at_most.clone() {
+                item.urgency <= u
+            } else { false };
+
+            let flag3 = if let Some(t) = text_substr.clone() {
+                item.text == t 
+            } else { false };
+
+            let flag4 = if let Some(c) = checked.clone() {
+                item.checked == c
+            } else { false };
+
+            let flag5 = if let Some(d) = due_in_less_than.clone() {
+                let date = chrono::offset::Utc::now();
+                if let Some(ida) = item.due_at {
+                    (ida - date) <= d
+                } else { false }
+            } else { false };
+
+            return flag1 || flag2 || flag3 || flag4 || flag5;
+        }).collect();
+        
+        let v: Vec<(usize, &Item)> = vec![];
+        let x: Vec<&Item> = self.items.iter().filter(|item| text_substr.as_ref().map_or(true, |substr| { item.text.contains(substr) })).into_iter().collect();
+
+        return v;
     }
 
     /// Sets whether a to-do item is checked off.
