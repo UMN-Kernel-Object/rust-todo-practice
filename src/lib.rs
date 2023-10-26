@@ -130,9 +130,6 @@ mod tests {
                 urgency: Urgency::Low   
             };
     
-            // let offset = if let Some(d) = Duration::seconds(1000000) { d 
-            // } else { panic!("Invalid Date Returned: exiting test") }; 
-    
             let item2 = Item {
                 text: String::from("I am item2!"),
                 checked: true,
@@ -329,5 +326,25 @@ mod tests {
         assert!(*ind1 == 0 && *ind2 == 2);
         compare_items(&item1, &items[*ind1]);
         compare_items(&item2, &items[*ind2]);
+    }
+
+    #[test]
+    fn timing_test() {
+        let (_, mut list) = setup_search_tests(false);
+        for i in 1..1_000_000 {
+            list.add_full_item(&Item {
+                text: format!("I am item {i}!"),
+                checked: true,
+                due_at: None,
+                urgency: Urgency::Normal
+            })
+        }
+
+        let before = Utc::now();
+        list.search(None, Some(true), None, None, None);
+        let after = Utc::now();
+
+        let diff = (after - before).num_milliseconds();
+        println!("Duration: {diff}");
     }
 }
