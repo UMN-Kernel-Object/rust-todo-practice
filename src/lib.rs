@@ -328,6 +328,8 @@ mod tests {
         compare_items(&item2, &items[*ind2]);
     }
 
+    // doesn't actually test anything, just times the search function
+    // should be run with the --nocapture argument to actually show stdout
     #[test]
     fn timing_test() {
         let (_, mut list) = setup_search_tests(false);
